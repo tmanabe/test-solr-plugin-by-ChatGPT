@@ -1,0 +1,1 @@
+# test-solr-plugin-by-ChatGPT
