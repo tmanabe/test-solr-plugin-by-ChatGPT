@@ -41,7 +41,7 @@ public class ConditionExpressionField extends FieldType {
     @Override
     public IndexableField createField(SchemaField field, Object value) {
         if (value == null) return null;
-        byte[] bytes = value.toString().getBytes(StandardCharsets.UTF_8);
+        byte[] bytes = ConditionExpressionParser.parseToBytes(value.toString());
         return new BinaryDocValuesField(field.getName(), new BytesRef(bytes));
     }
 

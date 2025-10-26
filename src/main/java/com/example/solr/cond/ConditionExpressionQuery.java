@@ -56,8 +56,7 @@ public class ConditionExpressionQuery extends Query {
             if (dv != null) {
                 BytesRef ref = getBytesRefForDoc(dv, doc);
                 if (ref != null) {
-                    ExpressionNode node = ExpressionParser.parse(ref.utf8ToString());
-                    match = node.evaluate(trueIds);
+                    match = ConditionEvaluator.evaluate(ref, trueIds);
                 }
             }
             return Explanation.match(match ? 1f : 0f, "ConditionExpressionQuery match=" + match);
@@ -89,14 +88,7 @@ public class ConditionExpressionQuery extends Query {
                             for (int d = Math.max(target, 0); d < maxDoc; ++d) {
                                 BytesRef ref = getBytesRefForDoc(dv, d);
                                 if (ref == null) continue;
-                                ExpressionNode node;
-                                try {
-                                    node = ExpressionParser.parse(ref.utf8ToString());
-                                } catch (RuntimeException e) {
-                                    // parse error -> treat as non-match
-                                    continue;
-                                }
-                                if (node.evaluate(trueIds)) {
+                                if (ConditionEvaluator.evaluate(ref, trueIds)) {
                                     docID = d;
                                     return docID;
                                 }

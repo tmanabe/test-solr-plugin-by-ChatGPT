@@ -34,9 +34,9 @@ public class ConditionExpressionQueryTest extends SolrTestCaseJ4 {
 
     @Test
     public void testAndCondition() {
-        assertU(adoc("id", "1", "cond_expr", "(AND A B)"));
-        assertU(adoc("id", "2", "cond_expr", "(AND A C)"));
-        assertU(adoc("id", "3", "cond_expr", "(AND B C)"));
+        assertU(adoc("id", "1", "cond_expr", "(A AND B)"));
+        assertU(adoc("id", "2", "cond_expr", "(A AND C)"));
+        assertU(adoc("id", "3", "cond_expr", "(B AND C)"));
         assertU(adoc("id", "4", "cond_expr", "A"));
         assertU(adoc("id", "5", "cond_expr", "B"));
         assertU(commit());
@@ -50,10 +50,10 @@ public class ConditionExpressionQueryTest extends SolrTestCaseJ4 {
 
     @Test
     public void testOrCondition() {
-        assertU(adoc("id", "1", "cond_expr", "(OR A B)"));
-        assertU(adoc("id", "2", "cond_expr", "(OR C D)"));
-        assertU(adoc("id", "3", "cond_expr", "(OR A D)"));
-        assertU(adoc("id", "4", "cond_expr", "(OR B C)"));
+        assertU(adoc("id", "1", "cond_expr", "(A OR B)"));
+        assertU(adoc("id", "2", "cond_expr", "(C OR D)"));
+        assertU(adoc("id", "3", "cond_expr", "(A OR D)"));
+        assertU(adoc("id", "4", "cond_expr", "(B OR C)"));
         assertU(adoc("id", "5", "cond_expr", "E"));
         assertU(commit());
 
@@ -80,11 +80,11 @@ public class ConditionExpressionQueryTest extends SolrTestCaseJ4 {
 
     @Test
     public void testComplexCondition() {
-        assertU(adoc("id", "1", "cond_expr", "(OR (AND A B) C)"));
-        assertU(adoc("id", "2", "cond_expr", "(AND A (NOT B))"));
-        assertU(adoc("id", "3", "cond_expr", "(AND (OR A D) (NOT C))"));
-        assertU(adoc("id", "4", "cond_expr", "(OR B C)"));
-        assertU(adoc("id", "5", "cond_expr", "(AND A B C)"));
+        assertU(adoc("id", "1", "cond_expr", "((A AND B) OR C)"));
+        assertU(adoc("id", "2", "cond_expr", "(A AND (NOT B))"));
+        assertU(adoc("id", "3", "cond_expr", "((A OR D) AND (NOT C))"));
+        assertU(adoc("id", "4", "cond_expr", "(B OR C)"));
+        assertU(adoc("id", "5", "cond_expr", "(A AND B AND C)"));
         assertU(commit());
 
         assertQ(req("q", "{!cond field=cond_expr true_ids=A,B}"),

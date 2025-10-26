@@ -2,10 +2,12 @@ package com.example.solr.cond;
 
 import java.util.*;
 
+@Deprecated
 abstract class ExpressionNode {
     abstract boolean evaluate(Set<String> trueIds);
 }
 
+@Deprecated
 class LeafNode extends ExpressionNode {
     final String id;
     LeafNode(String id) { this.id = id; }
@@ -13,6 +15,7 @@ class LeafNode extends ExpressionNode {
     boolean evaluate(Set<String> trueIds) { return trueIds.contains(id); }
 }
 
+@Deprecated
 class AndNode extends ExpressionNode {
     final List<ExpressionNode> children;
     AndNode(List<ExpressionNode> c) { children = c; }
@@ -23,6 +26,7 @@ class AndNode extends ExpressionNode {
     }
 }
 
+@Deprecated
 class OrNode extends ExpressionNode {
     final List<ExpressionNode> children;
     OrNode(List<ExpressionNode> c) { children = c; }
@@ -33,6 +37,7 @@ class OrNode extends ExpressionNode {
     }
 }
 
+@Deprecated
 class NotNode extends ExpressionNode {
     final ExpressionNode child;
     NotNode(ExpressionNode c) { child = c; }
@@ -40,6 +45,7 @@ class NotNode extends ExpressionNode {
     boolean evaluate(Set<String> trueIds) { return !child.evaluate(trueIds); }
 }
 
+@Deprecated
 class ExpressionParser {
     // parse S-expression string like: (AND 1 (OR 2 (NOT 3)))
     static ExpressionNode parse(String s) {
