@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example.solr'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.apache.solr:solr-core:9.4.0"
+    // SolrJ などを使う場合は追加
+    // implementation "org.apache.solr:solr-solrj:9.4.0"
+
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.apache.solr:solr-test-framework:9.4.0"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+}
+
+allprojects {
+    plugins.withType(JavaPlugin).configureEach {
+        tasks.withType(Test).configureEach {
+            systemProperty 'java.security.egd', 'file:/dev/./urandom'
+        }
+    }
+}

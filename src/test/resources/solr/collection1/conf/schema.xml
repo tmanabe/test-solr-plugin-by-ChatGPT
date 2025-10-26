@@ -1,0 +1,8 @@
+<schema name="test" version="1.6">
+    <fieldType name="string" class="solr.StrField"/>
+    <fieldType name="cond_expr" class="com.example.solr.cond.ConditionExpressionField"/>
+
+    <field name="id" type="string" indexed="true" stored="true" required="true" />
+    <field name="cond_expr" type="cond_expr" docValues="true" stored="true" />
+    <uniqueKey>id</uniqueKey>
+</schema>

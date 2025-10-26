@@ -1,0 +1,8 @@
+<config>
+    <luceneMatchVersion>9.4.0</luceneMatchVersion>
+
+    <queryParser name="cond" class="com.example.solr.cond.ConditionExpressionQParserPlugin"/>
+
+    <updateHandler class="solr.DirectUpdateHandler2"/>
+    <requestHandler name="/select" class="solr.SearchHandler"/>
+</config>
